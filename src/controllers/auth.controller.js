@@ -1,12 +1,53 @@
+/**
+ * @file auth.controller.js
+ * @description Controlador de autenticación con registro, login, logout y perfil.
+ * Maneja hashing de contraseñas con bcrypt, generación de JWT y validación de credenciales.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
+ */
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { supabase, supabaseAdmin } = require('../config/supabase');
 const config = require('../config/config');
 
 /**
- * @route   POST /api/auth/register
- * @desc    Registrar nuevo usuario
- * @access  Public
+ * Registrar nuevo usuario
+ * @function register
+ * @description Crea un nuevo usuario con contraseña hasheada y genera JWT automáticamente.
+ * Valida email único, formato correcto y longitud mínima de contraseña.
+ * 
+ * @route POST /api/v1/auth/register
+ * @access Public
+ * 
+ * @param {Object} req.body - Datos del nuevo usuario
+ * @param {string} req.body.nombre - Nombre completo del usuario
+ * @param {string} req.body.correo - Email único
+ * @param {string} req.body.password - Contraseña (mínimo 6 caracteres)
+ * @param {string} [req.body.telefono] - Teléfono opcional
+ * 
+ * @returns {Object} 201 - Usuario creado con token JWT
+ * @returns {Object} 400 - Validación fallida
+ * @returns {Object} 409 - Email ya registrado
+ * @returns {Object} 500 - Error del servidor
+ * 
+ * @example
+ * // Request
+ * POST /api/v1/auth/register
+ * {
+ *   "nombre": "Juan Pérez",
+ *   "correo": "juan@example.com",
+ *   "password": "securepass123",
+ *   "telefono": "+57 300 123 4567"
+ * }
+ * 
+ * // Response 201
+ * {
+ *   "success": true,
+ *   "message": "Usuario registrado exitosamente",
+ *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+ *   "usuario": { "id_usuario": 1, "nombre": "Juan Pérez", ... }
+ * }
  */
 exports.register = async (req, res, next) => {
   try {
@@ -110,9 +151,37 @@ exports.register = async (req, res, next) => {
 };
 
 /**
- * @route   POST /api/auth/login
- * @desc    Iniciar sesión
- * @access  Public
+ * Iniciar sesión de usuario
+ * @function login
+ * @description Autentica usuario con email y contraseña, genera JWT si las credenciales son válidas.
+ * Compara contraseña con bcrypt y retorna datos del usuario con token.
+ * 
+ * @route POST /api/v1/auth/login
+ * @access Public
+ * 
+ * @param {Object} req.body - Credenciales de login
+ * @param {string} req.body.correo - Email del usuario
+ * @param {string} req.body.password - Contraseña sin hashear
+ * 
+ * @returns {Object} 200 - Login exitoso con token JWT
+ * @returns {Object} 400 - Falta email o contraseña
+ * @returns {Object} 401 - Credenciales inválidas
+ * @returns {Object} 500 - Error del servidor
+ * 
+ * @example
+ * // Request
+ * POST /api/v1/auth/login
+ * {
+ *   "correo": "juan@example.com",
+ *   "password": "securepass123"
+ * }
+ * 
+ * // Response 200
+ * {
+ *   "success": true,
+ *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+ *   "usuario": { "id_usuario": 1, "nombre": "Juan Pérez", ... }
+ * }
  */
 exports.login = async (req, res, next) => {
   try {

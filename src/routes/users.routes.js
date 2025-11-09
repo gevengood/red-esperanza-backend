@@ -1,5 +1,10 @@
 /**
- * RED ESPERANZA - RUTAS DE USUARIOS
+ * @file users.routes.js
+ * @description Rutas de gestión de usuarios.
+ * Define endpoints para consulta de perfiles, estadísticas y listado de usuarios.
+ * Operaciones protegidas por autenticación y algunas solo para administradores.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 const express = require('express');

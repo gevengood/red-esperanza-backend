@@ -1,5 +1,10 @@
 /**
- * RED ESPERANZA - RUTAS DE CASOS
+ * @file cases.routes.js
+ * @description Rutas de casos de desaparición (CRUD completo).
+ * Define endpoints públicos para consulta y privados para creación/edición.
+ * Incluye protección por rol para operaciones de administración.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 const express = require('express');

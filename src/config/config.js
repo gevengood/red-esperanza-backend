@@ -1,10 +1,25 @@
 /**
- * RED ESPERANZA - CONFIGURACIÓN PRINCIPAL
- * Archivo de configuración centralizada
+ * @file config.js
+ * @description Configuración centralizada de la aplicación backend.
+ * Carga variables de entorno y exporta configuraciones para servidor, base de datos,
+ * autenticación, CORS, rate limiting y upload de archivos.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 require('dotenv').config();
 
+/**
+ * Objeto de configuración global de la aplicación
+ * @constant {Object}
+ * @property {Object} server - Configuración del servidor Express
+ * @property {Object} supabase - Credenciales de Supabase (PostgreSQL + Storage)
+ * @property {Object} jwt - Configuración de JSON Web Tokens
+ * @property {Object} cors - Configuración de Cross-Origin Resource Sharing
+ * @property {Object} rateLimit - Configuración de limitación de peticiones
+ * @property {Object} logging - Nivel de logs
+ * @property {Object} upload - Configuración de subida de archivos
+ */
 module.exports = {
   // Configuración del servidor
   server: {

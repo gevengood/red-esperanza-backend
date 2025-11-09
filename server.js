@@ -1,9 +1,11 @@
 /**
- * RED ESPERANZA - SERVIDOR PRINCIPAL
- * Backend API con Express.js y Supabase
- * 
- * @author Equipo Red Esperanza
- * @course Diseño y Arquitectura de Software
+ * @file server.js
+ * @description Servidor principal de la API REST de Red Esperanza.
+ * Configura Express con middlewares de seguridad, CORS, rate limiting y rutas.
+ * Maneja autenticación JWT, casos de desaparición, pistas y usuarios.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
+ * @course Diseño y Arquitectura de Software - Universidad de la Sabana
  */
 
 const express = require('express');

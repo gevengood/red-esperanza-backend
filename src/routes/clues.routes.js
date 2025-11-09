@@ -1,5 +1,10 @@
 /**
- * RED ESPERANZA - RUTAS DE PISTAS
+ * @file clues.routes.js
+ * @description Rutas de pistas/clues de casos de desaparición.
+ * Define endpoints para consulta, creación, verificación y rechazo de pistas.
+ * Pistas verificadas son públicas, pendientes solo visibles para admin.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 const express = require('express');

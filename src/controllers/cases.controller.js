@@ -1,9 +1,41 @@
+/**
+ * @file cases.controller.js
+ * @description Controlador de casos de desaparición con CRUD completo.
+ * Maneja creación, consulta, actualización y eliminación de casos, con filtros,
+ * paginación, gestión de estados y subida de fotos a Supabase Storage.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
+ */
+
 const { supabaseAdmin } = require('../config/supabase');
 
 /**
- * @route   GET /api/cases
- * @desc    Obtener todos los casos activos
- * @access  Public
+ * Obtener todos los casos con filtros
+ * @function getAllCases
+ * @description Lista casos con opción de filtrar por estado y paginación.
+ * Usuarios normales ven solo casos ACTIVOS, administradores ven todos.
+ * 
+ * @route GET /api/v1/cases
+ * @access Public (casos ACTIVOS) / Private (todos los estados para admin)
+ * 
+ * @param {Object} req.query - Parámetros de búsqueda
+ * @param {string} [req.query.estado] - Filtrar por estado (ACTIVO, PENDIENTE_REVISION, etc.)
+ * @param {number} [req.query.limite=50] - Cantidad de resultados por página
+ * @param {number} [req.query.pagina=1] - Número de página
+ * 
+ * @returns {Object} 200 - Lista de casos con paginación
+ * @returns {Object} 500 - Error del servidor
+ * 
+ * @example
+ * // Request
+ * GET /api/v1/cases?estado=ACTIVO&limite=10&pagina=1
+ * 
+ * // Response 200
+ * {
+ *   "success": true,
+ *   "data": [{ "id_caso": 1, "nombre_desaparecido": "María", ... }],
+ *   "pagination": { "pagina": 1, "limite": 10, "total": 25 }
+ * }
  */
 exports.getAllCases = async (req, res, next) => {
   try {

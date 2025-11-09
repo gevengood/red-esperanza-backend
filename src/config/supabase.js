@@ -1,6 +1,10 @@
 /**
- * RED ESPERANZA - SUPABASE CLIENT
- * Cliente de conexión a Supabase
+ * @file supabase.js
+ * @description Configuración y creación de clientes de Supabase para backend.
+ * Exporta dos clientes: uno normal con anon key y uno admin con service key
+ * para operaciones privilegiadas como gestión de usuarios y almacenamiento.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 const { createClient } = require('@supabase/supabase-js');

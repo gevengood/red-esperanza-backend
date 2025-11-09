@@ -1,5 +1,9 @@
 /**
- * RED ESPERANZA - RUTAS DE AUTENTICACIÓN
+ * @file auth.routes.js
+ * @description Rutas de autenticación (registro, login, logout, perfil).
+ * Define endpoints públicos y privados para gestión de autenticación JWT.
+ * @author Jorge Steven Doncel Bejarano
+ * @date 2025-11-09
  */
 
 const express = require('express');
