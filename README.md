@@ -1,4 +1,4 @@
-﻿# Proyecto de Diseño de Software – Corte Uno: Red Esperanza Backend
+﻿# Proyecto de Diseño de Software – Corte Tres: Red Esperanza Backend
 
 ## 🧠 Presentación del Problema
 
