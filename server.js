@@ -124,14 +124,15 @@ app.use((err, req, res, next) => {
 
 const PORT = config.server.port;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log('');
   console.log('╔════════════════════════════════════════════╗');
   console.log('║      🔴 RED ESPERANZA - BACKEND API       ║');
   console.log('╚════════════════════════════════════════════╝');
   console.log('');
   console.log(`✅ Servidor corriendo en puerto ${PORT}`);
-  console.log(`🌐 URL: http://localhost:${PORT}`);
+  console.log(`🌐 URL Local: http://localhost:${PORT}`);
+  console.log(`📱 URL Red: http://192.168.0.23:${PORT}`);
   console.log(`🔧 Entorno: ${config.server.env}`);
   console.log(`📡 API Version: ${config.server.apiVersion}`);
   console.log('');

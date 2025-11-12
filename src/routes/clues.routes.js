@@ -15,9 +15,9 @@ const { auth, isAdmin } = require('../middleware/auth.middleware');
 /**
  * @route   GET /api/clues/case/:caseId
  * @desc    Obtener pistas de un caso
- * @access  Public (solo verificadas), Private (todas si es admin)
+ * @access  Private (dueño del caso ve verificadas, admin ve todas)
  */
-router.get('/case/:caseId', auth(false), cluesController.getCluesByCase);
+router.get('/case/:caseId', auth(), cluesController.getCluesByCase);
 
 /**
  * @route   GET /api/clues/pending

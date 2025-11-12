@@ -3,11 +3,44 @@ const { supabaseAdmin } = require('../config/supabase');
 /**
  * @route   GET /api/clues/case/:caseId
  * @desc    Obtener todas las pistas de un caso específico
- * @access  Public (solo pistas verificadas), Private (todas si es admin)
+ * @access  Private (dueño del caso ve solo verificadas, admin ve todas)
  */
 exports.getCluesByCase = async (req, res, next) => {
   try {
     const { caseId } = req.params;
+
+    // Verificar que el usuario esté autenticado
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: 'Debes iniciar sesión para ver las pistas'
+      });
+    }
+
+    // Obtener info del caso para validar que sea el dueño
+    const { data: caso, error: casoError } = await supabaseAdmin
+      .from('casos')
+      .select('id_caso, id_usuario_reportero')
+      .eq('id_caso', caseId)
+      .single();
+
+    if (casoError || !caso) {
+      return res.status(404).json({
+        success: false,
+        error: 'Caso no encontrado'
+      });
+    }
+
+    const isAdmin = req.user.es_administrador;
+    const isOwner = req.user.id_usuario === caso.id_usuario_reportero;
+
+    // Solo admin o dueño del caso pueden ver pistas
+    if (!isAdmin && !isOwner) {
+      return res.status(403).json({
+        success: false,
+        error: 'No tienes permiso para ver estas pistas'
+      });
+    }
 
     let query = supabaseAdmin
       .from('pistas')
@@ -26,8 +59,8 @@ exports.getCluesByCase = async (req, res, next) => {
       .eq('id_caso', caseId)
       .order('fecha_creacion', { ascending: false });
 
-    // Si no es admin, solo mostrar pistas verificadas
-    if (!req.user || !req.user.es_administrador) {
+    // Admin ve todas las pistas, dueño solo las VERIFICADAS
+    if (!isAdmin) {
       query = query.eq('estado_pista', 'VERIFICADA');
     }
 
