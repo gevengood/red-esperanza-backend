@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout código
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Necesario para SonarCloud
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -29,6 +31,13 @@ jobs:
 
     - name: Análisis de seguridad de dependencias
       run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       continue-on-error: true
 
     - name: Subir reporte de cobertura
