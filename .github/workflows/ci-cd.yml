@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Pruebas y Análisis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Instalar dependencias
+      run: npm ci
+
+    - name: Ejecutar pruebas unitarias
+      run: npm test
+
+    - name: Análisis de seguridad de dependencias
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+    - name: Subir reporte de cobertura
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage/
+        retention-days: 7
+
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: docker build -t red-esperanza-backend:${{ github.sha }} .
+
+    - name: Verificar imagen Docker
+      run: docker images | grep red-esperanza-backend
