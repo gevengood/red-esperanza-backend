@@ -254,3 +254,9 @@ npm start
 ```
 
 Servidor en http://localhost:5000
+
+
+Autores:
+Jorge Steven Doncel Bejarano – Arquitectura frontend, implementación inicial, integración con backend, documentación académica. 
+David Santiago Buendia Londoño – Arquitectura frontend, implementación inicial, integración con backend, documentación académica. 
+Santiago Pulido Herrera – Arquitectura frontend, implementación inicial, integración con backend, documentación académica.
